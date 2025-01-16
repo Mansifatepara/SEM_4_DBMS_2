@@ -1,0 +1,207 @@
+LAB-9
+
+PART-A
+
+
+---Create and Select Database Named: “BANK_INFO”.
+> use BANK_INFO
+
+---create Collection
+> use BANK_INFO 
+> db.createCollection('Deposit')
+
+----insert records into Deposit Collection
+> db.Deposit.insertMany([
+  {
+    "ACTNO": 101,
+    "CNAME": "ANIL",
+    "BNAME": "VRCE",
+    "AMOUNT": 1000,
+    "ADATE": "1995-03-01"
+  },
+  {
+    "ACTNO": 102,
+    "CNAME": "SUNIL",
+    "BNAME": "AJNI",
+    "AMOUNT": 5000,
+    "ADATE": "1996-01-04"
+  },
+  {
+    "ACTNO": 103,
+    "CNAME": "MEHUL",
+    "BNAME": "KAROLBAGH",
+    "AMOUNT": 3500,
+    "ADATE": "1995-11-17"
+  },
+  {
+    "ACTNO": 104,
+    "CNAME": "MADHURI",
+    "BNAME": "CHANDI",
+    "AMOUNT": 1200,
+    "ADATE": "1995-12-17"
+  },
+  {
+    "ACTNO": 105,
+    "CNAME": "PRMOD",
+    "BNAME": "M.G. ROAD",
+    "AMOUNT": 3000,
+    "ADATE": "1996-03-27"
+  },
+  {
+    "ACTNO": 106,
+    "CNAME": "SANDIP",
+    "BNAME": "ANDHERI",
+    "AMOUNT": 2000,
+    "ADATE": "1996-03-31"
+  },
+  {
+    "ACTNO": 107,
+    "CNAME": "SHIVANI",
+    "BNAME": "VIRAR",
+    "AMOUNT": 1000,
+    "ADATE": "1995-09-05"
+  },
+  {
+    "ACTNO": 108,
+    "CNAME": "KRANTI",
+    "BNAME": "NEHRU PLACE",
+    "AMOUNT": 5000,
+    "ADATE": "1995-07-02"
+  }
+]
+)
+
+
+
+
+
+PART-A
+
+---------------------------------------------------------------------------------------
+
+
+1.Retrieve/Display every document of Deposit collection.
+> db.Deposit.find()
+
+2.Display only one document of Deposit collection. (Use: findOne())
+> db.Deposit.findOne()
+
+3.Insert following document into Deposit collection. (Use: insertOne())
+--109 KIRTI VIRAR 3000 3-5-97
+> db.Deposit.insertOne({ACTNO:109,CNAME:'KIRTI',BNAME:'VIRAR',AMOUNT:3000,ADATE:'3-5-97'})
+
+4. Insert following documents into Deposit collection. (Use: insertMany()) 
+--110 MITALI ANDHERI 4500 4-9-95
+--111 RAJIV NEHRU PLACE 7000 2-10-98
+> db.Deposit.insertOne({"ACTNO":110,"CNAME":'MITALI',"BNAME":'ANDHERI',"AMOUNT":4500,"ADATE":'4-9-95'},
+			{"ACTNO":111,"CNAME":'RAJIV',"BNAME":'NEHRU PLACE',"AMOUNT":7000,"ADATE":'2-10-98'})
+
+5.Display all the documents of ‘VIRAR’ branch from Deposit collection.
+> db.Deposit.find({"BNAME":'VIRAR'},{}).forEach(printjson)
+
+6.Display all the documents of Deposit collection whose amount is between 3000 and 5000.
+> db.Deposit.find({$and:[{"AMOUNT":{$gt:3000}},{"AMOUNT":{$lt:5000}}]},{}).forEach(printjson)
+ 
+7.Display all the documents of Deposit collection whose amount is greater than 2000 and branch is VIRAR.
+> db.Deposit.find({$and:[{"AMOUNT":{$gt:2000}},{"BNAME":'VIRAR'}]},{}).forEach(printjson)
+
+8.Display all the documents with CNAME, BNAME and AMOUNT fields from Deposit collection.
+> db.Deposit.find({},{"CNAME":1,"BNAME":1,"AMOUNT":1}).forEach(printjson)
+
+9.Display all the documents of Deposit collection on ascending order by CNAME.
+> db.Deposit.find({},{}).sort({'CNAME':1})
+
+10.Display all the documents of Deposit collection on descending order by BNAME.
+> db.Deposit.find({},{}).sort({'BNAME':-1})
+
+11.Display all the documents of Deposit collection on ascending order by ACTNO and descending order by 
+AMOUNT.
+> db.Deposit.find({},{}).sort({'ACTNO':1,'AMOUNT':-1})
+
+12.Display only two documents of Deposit collection.
+> db.Deposit.find().limit(3).forEach(printjson)
+
+13.Display 3rd document of Deposit collection.
+> db.Deposit.find().skip(2).limit(1).forEach(printjson)
+
+14.Display 6th and 7th documents of Deposit collection.
+> db.Deposit.find().skip(5).limit(2).forEach(printjson)
+
+15.Display the count of documents in Deposit collection.  
+> db.Deposit.find().count()
+
+
+PART-B
+
+
+1) Insert following documents into “Student” collection. (Use: insertMany())
+> db.Student.insertMany([
+{ "_id": 1, "name": "John", "age": 30, "city": "New York", "isActive": true }, 
+{ "_id": 2, "name": "Jane", "age": 25, "city": "Los Angeles", "isActive": false }, 
+{ "_id": 3, "name": "Tom", "age": 35, "city": "Chicago", "isActive": true },
+{ "_id": 4, "name": "Lucy", "age": 28, "city": "San Francisco", "isActive": true }, 
+{ "_id": 5, "name": "David", "age": 40, "city": "Miami", "isActive": false },
+{ "_id": 6, "name": "Eva", "age": 23, "city": "Boston", "isActive": true },
+{ "_id": 7, "name": "Nick", "age": 38, "city": "Seattle", "isActive": false }, 
+{ "_id": 8, "name": "Sophia", "age": 27, "city": "New York", "isActive": true }, 
+{ "_id": 9, "name": "Liam", "age": 32, "city": "Los Angeles", "isActive": false }, 
+{ "_id": 10, "name": "Olivia", "age": 29, "city": "San Diego", "isActive": true }
+])
+
+2) Display all documents of "Student" collection.
+> db.Student.find({},{})
+
+3) Display all documents of "Student" collection whose age is 30.
+> db.Student.find({age:{$eq:30}})
+
+4) Display all documents of "Student" collection whose age is greater than 25.
+> db.Student.find({age:{$gt:30}},{})
+
+5) Display all documents of "Student" collection whose name is "John" and age is 30.
+> db.Student.find({name:{($eq:'John'},{age:{$eq:30}}},{})
+
+6) Display all documents of "Student" collection whose age is not equal to 25. 
+> db.Student.find({age:{$ne:25}})
+
+7) Display all documents of "Student" collection whose age is equal to 25 or 30 or 35. (using $or as well 
+as using $in).
+---using $or
+> db.Sudent.find({$or:{age:{$eq:25}},{age:{$eq:30}},{age:{$eq:35}}},{})
+----using $in
+> db.Student.fond({age:{$in:{25,30,35}}},{})
+
+8) Display all documents of "Student" collection whose name is "John" or age is 30.
+> db.Student.find({name:{$eq:'John'},age:{$eq:30}},{})
+
+9) Display all documents of "Student" collection whose name is "John" and city is New York.
+> db.Student.find({$and:[{name:'John'},{city:'New York'}]},{})
+
+10)  Display name and age of students from "Student" collection whose name is "John" and city is New York.
+> db.Student.find({$and:{name:{$eq:'John'}},{city:{$eq:'New York'}}},{name:1,age:1})
+
+
+
+PART-C
+
+1) Display name of students from "Student" collection whose age is between to 25 and 35 and sort output 
+by age in ascending order.
+> db.Student.find({$and:[{age:{$gt:25}},{age:{$lt:35}}]},{}).sort({age:1})
+
+2) Display all documents of "Student" collection and sort all the documents by name in ascending order 
+and then by age in descending.
+> db.Student.find({},{}).sort({name:1,age:-1}).forEach(printjson)
+
+3) Display first five documents of "Student" collection.
+> db.Student.find({},{}).limit(5).forEach(printjson)
+
+4) Display fourth and fifth documents of "Student" collection.
+> db.Student.find({},{}).skip(3).limit(2).forEach(printjson)
+		&&
+> db.Student.find({},{}).limit(2).skip(3).forEach(printjson)
+
+5) Display the name of oldest student from "Student" collection.
+> db.Student.find({},{}).sort({"name":1}).forEach(printjson)
+
+6) Display all documents of "Student" collection in such a way that skip the first 2 documents and return 
+the rest documents.
+> db.Student.find({},{}).skip(2).forEach(printjson)
