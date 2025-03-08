@@ -314,6 +314,8 @@ db.Students.insertMany([
 
 
 Part – C 
+
+
 1. Find students whose names start with a vowel (A, E, I, O, U).
 >db.Student.find({SNAME:{$regex:"^[AEIOU]"}})
  
